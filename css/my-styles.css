@@ -1,0 +1,40 @@
+html, body {
+	background: #34484F;
+	height: 100%;
+}
+
+.container {
+	background-image: url("../images/glados1.jpg");
+	color: #D4D4D4;
+	max-width: 1024px;
+	min-height: 768px;
+}
+
+.theform {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+.errors {
+	padding-top: 0px;
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.messages p {
+    width: 90%;
+    word-wrap: break-word;
+
+}
+
+.alert {
+	padding: 7px 12px;
+}
