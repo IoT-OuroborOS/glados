@@ -32,7 +32,7 @@ class DB {
 	public function query($sql, $params = array()) {
 		$this->_error = false; // we don't want to return an error from a previous query
 
-		$this->_query = $this->_pdo->prepare($sql)
+		$this->_query = $this->_pdo->prepare($sql);
 		
 		// check there parameters that we will bind
 		$x = 1;
@@ -135,9 +135,9 @@ class DB {
 		return $this->_results;
 	}
 
-	// public function first() {
-	// 	return $this->results()[0]; // need newer PHP version for this
-	// }
+	public function first() {
+		return $this->results()[0]; // need newer PHP version for this
+	}
 
 	public function error() {
 		return $this->_error;

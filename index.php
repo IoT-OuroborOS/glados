@@ -15,6 +15,7 @@ http://hts.sp.nitech.ac.jp/?Voice%20Demos
 */
 
 require_once 'inc/config.php';
+require_once 'classes/DB.php';
 
 // database connection
 try {
@@ -75,15 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 } // end main program logic
 
 // read the database
-try {
-	$db_query = $db->prepare("SELECT message FROM messages ORDER BY id DESC LIMIT 10");
-	$db_query->execute();
-}
-catch (Exception $error) {
-	echo "The query could not be completed: " . $error;
-}
-
-$stored_messages = $db_query->fetchAll(PDO::FETCH_ASSOC);
+$stored_messages_obj = DB::getInstance()->query("SELECT message FROM messages ORDER BY id DESC LIMIT 10");
 
 ?>
 <!DOCTYPE html>
@@ -139,9 +132,9 @@ $stored_messages = $db_query->fetchAll(PDO::FETCH_ASSOC);
 		<h3>Last 10 messages:</h3>
 
 		<?php
-			foreach($stored_messages as $message) { ?>
+			foreach($stored_messages_obj->results() as $message) { ?>
 			<li>
-				<p><?php echo '"' . $message["message"] . '"'; ?></p>
+				<p><?php echo '"' . $message->message . '"'; ?></p>
 		    </li>
 		<?php } ?>
 
