@@ -14,3 +14,7 @@ if(!$messages->count()) {
 foreach($messages->results() as $message) {
 	echo $message->message, '<br>';
 }
+
+DB::getInstance()->query("INSERT INTO messages (`message`) VALUES (?)", array("new message 123"));
+
+echo "inserting complete";

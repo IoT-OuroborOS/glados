@@ -8,28 +8,10 @@
 - add timestamp in database?
 - store only 10 in database - "FIFO que"
 
-LINKS
-http://blog.gleitzman.com/post/39978828612/speaking-with-computer-generated-voices
-http://hts.sp.nitech.ac.jp/?Voice%20Demos
-
 */
 
 require_once 'inc/config.php';
 require_once 'classes/DB.php';
-
-// database connection
-try {
-
-	$db = new PDO('mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME . '',DB_USER,DB_PASS);
-
-	$db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-
-	$db->exec("SET NAMES 'utf8'");
-
-} 	catch (Exception $error) {
-			echo "Could not connect to database: " . $error;
-		exit;
-}
 
 // main program logic
 if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -55,11 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 			exec("lame " . $outwav . " " . $outmp3);
 
 			try {
-				$db_query = $db->prepare("INSERT INTO messages(message) VALUES(?)");
-
-				$db_query->bindParam(1,$texttosay);
-
-				$db_query->execute();
+				DB::getInstance()->query("INSERT INTO messages (`message`) VALUES (?)", array($texttosay));
 
 			}	catch (Exception $error) {
 					echo "The query could not be completed: " . $error;
