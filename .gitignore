@@ -1,2 +1,2 @@
 inc/config.php
-*.mp3
+soundfiles/*

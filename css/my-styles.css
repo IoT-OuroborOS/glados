@@ -1,19 +1,15 @@
 html, body {
-	background: #34484F;
+	background-image: url("../img/glados2.jpeg");	
 	height: 100%;
 }
 
 .container {
-	background-image: url("../images/glados1.jpg");
-	color: #D4D4D4;
-	max-width: 1024px;
-	min-height: 768px;
+	color: #fff;
 }
 
 .theform {
-	padding-top: 30px;
 	padding-bottom: 30px;
-	width: 60%;
+	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 }
