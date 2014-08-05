@@ -34,7 +34,7 @@ function textToSound($texttosay) {
 	$textfile = uniqid();
 
 	//open new text file for writing
-	if (!$file_handle = fopen(SOUNDS_DIR . '/' . $textfile,"x")) {
+	if (!$file_handle = fopen(SOUNDS_DIR . $textfile,"x")) {
 		return false; // error in creating the text file
 	}
 
@@ -47,8 +47,8 @@ function textToSound($texttosay) {
 	fclose($file_handle);
 
 	//generate file names for wav and mp3
-	$wav = SOUNDS_DIR . '/' . $textfile . ".wav";
-	$mp3 = SOUNDS_DIR . '/' . $textfile . ".mp3";
+	$wav = SOUNDS_DIR . $textfile . ".wav";
+	$mp3 = SOUNDS_DIR . $textfile . ".mp3";
 
 	// output and return from exec commands
 	// return is non 0 if exec fails
@@ -56,7 +56,7 @@ function textToSound($texttosay) {
 	$exec_return = "";
 
 	// generate wav
-	exec("text2wave -o " . $wav . " " . SOUNDS_DIR . '/' . $textfile, $exec_output, $exec_return);
+	exec("text2wave -o " . $wav . " " . SOUNDS_DIR . $textfile, $exec_output, $exec_return);
 
 	// generate mp3 - smaller file size to send back to client
 	exec("lame " . $wav . " " . $mp3, $exec_output, $exec_return);
@@ -74,8 +74,8 @@ function textToSound($texttosay) {
 
   // delete textfile and wav file
   // we can't delete mp3 file as we need to send it to the client
-  if(is_file(SOUNDS_DIR . '/' . $textfile)) {
-    unlink(SOUNDS_DIR . '/' . $textfile);
+  if(is_file(SOUNDS_DIR . $textfile)) {
+    unlink(SOUNDS_DIR . $textfile);
   }
 
   if(is_file($wav)) {
