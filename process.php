@@ -72,6 +72,22 @@ function textToSound($texttosay) {
 			return false; // database INSERT error
 	}
 
+  // delete all but the last 10 records
+  try {
+    DB::getInstance()->query("DELETE FROM `messages`
+      WHERE id NOT IN (
+        SELECT id
+        FROM (
+          SELECT id
+          FROM `messages`
+          ORDER BY id DESC
+          LIMIT 10 -- keep this many records
+        ) foo
+      )");
+  }	catch (Exception $error) {
+      return false; // database DELETE error
+  }
+
   // delete textfile and wav file
   // we can't delete mp3 file as we need to send it to the client
   if(is_file(SOUNDS_DIR . $textfile)) {
