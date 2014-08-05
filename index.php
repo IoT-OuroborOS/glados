@@ -86,14 +86,16 @@ $stored_messages_obj = DB::getInstance()->query("SELECT message FROM messages OR
 			// clear errors
 
 			var texttosay = $("input[name='t']").val().trim();
-			
+
 			// check for spaces only
 			if(texttosay.length <= 255 && texttosay.length > 0) {
 
 				$.post('process.php', {t:texttosay},
 					function(data) {
-						$(".messages").append(data);	
-				});	
+						$(".messages").append(data);
+				});
+
+        $('#texttosay').val('');
 
 			} else {
 				$(".errors").html('<p class="alert alert-danger">Invalid string length.</p>');
@@ -101,11 +103,9 @@ $stored_messages_obj = DB::getInstance()->query("SELECT message FROM messages OR
 
 			// clear text field
 
-		});						   
+		});
 	});
 </script>
 
 </body>
 </html>
-
-
