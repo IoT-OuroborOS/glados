@@ -3,7 +3,7 @@ require_once 'inc/config.php';
 require_once 'classes/DB.php';
 
 if (isset($_POST['t'])) {
-    
+
     $texttosay = trim($_POST["t"]);
 
     if (strlen($texttosay) > 0 && strlen($texttosay) <= 255) {
@@ -21,7 +21,7 @@ if (isset($_POST['t'])) {
 				<embed src="<?php echo $sound_file; ?>" autostart=true loop=false>
 			</audio>
 
-		<?php	
+		<?php
 		}
 
     } else {
@@ -67,11 +67,11 @@ function textToSound($texttosay) {
 
 	// put the message into the database
 	try {
-		DB::getInstance()->query("INSERT INTO messages (`message`) VALUES (?)", array($texttosay));
+		DB::getInstance()->query("INSERT INTO messages (`message`, `timestamp`) VALUES (?, ?)", array($texttosay, date('Y-m-d H:i:s')));
 	}	catch (Exception $error) {
 			return false; // database INSERT error
 	}
-	return $mp3;	
+	return $mp3;
 }
 	// Cleaning Up
 	// if(file_exists($tempfilename)) {
