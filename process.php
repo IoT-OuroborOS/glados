@@ -9,23 +9,21 @@ if (isset($_POST['t'])) {
     if (strlen($texttosay) > 0 && strlen($texttosay) <= 255) {
 
     	// call function to generate sound file
-		if(!$sound_file = textToSound($texttosay)) {
-			$error_message = "There was an error generating the sound file.";
-		} else { ?>
+  		if(!$sound_file = textToSound($texttosay)) {
+  			$error_message = "There was an error generating the sound file.";
+  		} else { ?>
 
-			<!-- play the sound file using HTML5-->
-			<audio preload="auto" autoplay>
-				<!-- we could also add the controls -->
-				<source src="<?php echo $sound_file; ?>" type="audio/mpeg">
-				<!-- this is a fallback for older browsers -->
-				<embed src="<?php echo $sound_file; ?>" autostart=true loop=false>
-			</audio>
+  			<!-- play the sound file using HTML5-->
+  			<audio preload="auto" autoplay>
+  				<!-- we could also add the controls -->
+  				<source src='<?php echo $sound_file; ?>' type="audio/mpeg">
+  				<!-- this is a fallback for older browsers -->
+  				<embed src="<?php echo $sound_file; ?>" autostart=true loop=false>
+  			</audio>
 
-		<?php
-		}
+  		<?php
+  		}
 
-    } else {
-    		$error_message = "An invalid text string has been entered.";
     }
 } // end main program logic
 

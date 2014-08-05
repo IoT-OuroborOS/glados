@@ -18,8 +18,6 @@
 require_once 'inc/config.php';
 require_once 'classes/DB.php';
 
-// read the database
-$stored_messages_obj = DB::getInstance()->query("SELECT message FROM messages ORDER BY id DESC LIMIT 10");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,17 +56,8 @@ $stored_messages_obj = DB::getInstance()->query("SELECT message FROM messages OR
 				</form>
 			</div>
 
-			<div class="messages">
-				<ul>
-					<h3>Last 10 messages:</h3>
-
-					<?php
-						foreach($stored_messages_obj->results() as $message) { ?>
-						<li>
-							<p><?php echo htmlspecialchars($message->message); ?></p>
-					    </li>
-					<?php } ?>
-				</ul>
+			<div class="messages" id="messages">
+        <?php include_once 'storedmessages.php' ?>
 			</div>
 		</div><!-- ./2nd column -->
 	</div><!-- ./row	 -->
@@ -90,12 +79,21 @@ $stored_messages_obj = DB::getInstance()->query("SELECT message FROM messages OR
 			// check for spaces only
 			if(texttosay.length <= 255 && texttosay.length > 0) {
 
+        //ajax request to the process.php file
+        //which returns sound file
 				$.post('process.php', {t:texttosay},
 					function(data) {
-						$(".messages").append(data);
-				});
+						$("#texttosay").append(data);
 
-        $('#texttosay').val('');
+            //clear the text input field
+            $('#texttosay').val('');
+
+            //fetch the stored messages and show updated list
+            //including message we just submitted
+            $.get('storedmessages.php', function(data) {
+              $('#messages').html(data);
+            });
+				});
 
 			} else {
 				$(".errors").html('<p class="alert alert-danger">Invalid string length.</p>');
