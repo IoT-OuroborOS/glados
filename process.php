@@ -71,6 +71,17 @@ function textToSound($texttosay) {
 	}	catch (Exception $error) {
 			return false; // database INSERT error
 	}
+
+  // delete textfile and wav file
+  // we can't delete mp3 file as we need to send it to the client
+  if(is_file(SOUNDS_DIR . '/' . $textfile)) {
+    unlink(SOUNDS_DIR . '/' . $textfile);
+  }
+
+  if(is_file($wav)) {
+    unlink($wav);
+  }
+
 	return $mp3;
 }
 	// Cleaning Up
