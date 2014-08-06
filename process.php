@@ -31,18 +31,10 @@ function textToSound($texttosay) {
     //generate a unique text file to store speach string
 	$textfile = uniqid();
 
-	//open new text file for writing
-	if (!$file_handle = fopen(SOUNDS_DIR . $textfile,"x")) {
+	//put the speach string into a text file
+	if (!file_put_contents(SOUNDS_DIR . $textfile, $texttosay)) {
 		return false; // error in creating the text file
 	}
-
-	//output speach string into text file and close the file
-	if (!fwrite($file_handle, $texttosay)) {
-		return false; // error writing to the text file
-	}
-
-	// close file after writing
-	fclose($file_handle);
 
 	//generate file names for wav and mp3
 	$wav = SOUNDS_DIR . $textfile . ".wav";
@@ -65,23 +57,18 @@ function textToSound($texttosay) {
 
 	// put the message into the database
 	try {
+
 		DB::getInstance()->query("INSERT INTO messages (`message`, `timestamp`) VALUES (?, ?)", array($texttosay, date('Y-m-d H:i:s')));
+	
 	}	catch (Exception $error) {
 			return false; // database INSERT error
 	}
 
   // delete all but the last 10 records
   try {
-    DB::getInstance()->query("DELETE FROM `messages`
-      WHERE id NOT IN (
-        SELECT id
-        FROM (
-          SELECT id
-          FROM `messages`
-          ORDER BY id DESC
-          LIMIT 10 -- keep this many records
-        ) foo
-      )");
+  	
+    DB::getInstance()->query("DELETE FROM `messages` WHERE id NOT IN (SELECT id FROM (SELECT id FROM `messages` ORDER BY id DESC LIMIT 10) foo )");
+  
   }	catch (Exception $error) {
       return false; // database DELETE error
   }
@@ -98,21 +85,4 @@ function textToSound($texttosay) {
 
 	return $mp3;
 }
-	// Cleaning Up
-	// if(file_exists($tempfilename)) {
-	// 	unlink($tempfilename);
-	// }
-	// if($outwav) {
-	// 	unlink($outwav);
-	// }
-	//unlink($outmp3);
-
-	// Close database connection
-	if(isset($db)) {
-		mysql_close($db);
-	}
-
-	//build command to delete mp3
-	//$delcmd = "./delscript.sh " . $outmp3 . " &";
-	//exec($delcmd);
 ?>
