@@ -5,13 +5,8 @@
 - escaping input
 - cleaning up files
 - file security
-- add timestamp in database?
-- store only 10 in database - "FIFO que"
-- validation on the client side with jQuery
-- abstract file manipulation in a seperate class
 - footer with link to home
-- add a fallback for before IE9 which don't have HTML5 audio tag support
-- return errors from process
+- return errors from process.php via .post request
 
 */
 
@@ -35,6 +30,7 @@ require_once 'classes/DB.php';
 		<div class="col-md-6"><!--  1st column -->
 			<p>(Genetic Lifeform and Disk Operating System) is a fictional artificially intelligent computer system and the main antagonist in the game Portal. She was created by Erik Wolpaw and Kim Swift and is voiced by Ellen McLain. She is responsible for testing and maintenance in Aperture Science research facility in both video games.</p>
 			<h3>How it works</h3>
+			<p>GLaDOS uses "Festival" - a command line speech API developed by The Centre for Speech Technology Reasearch - University of Edinburgh. The server creates a text file with the speech text which is sent to a command line utility to be converted to a wave sound file. This is then converted to a much smaller mp3 file using the "lame" command line utility which is then sent to the client's browser. The voice used is cmu_us_slt_arctic by Carnegie Mellon University.</p>
 		</div><!-- ./1st column -->
 
 		<div class="col-md-6">
