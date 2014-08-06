@@ -34,3 +34,17 @@ ul, li {
 .alert {
 	padding: 7px 12px;
 }
+
+/*Footer*/
+.footer {
+	padding-top: 100px;
+	text-align: center;
+}
+.footer li {
+	display: inline;
+	padding: 2em;
+}
+footer a:link {
+    color: #000;
+    text-decoration: none;
+}
